@@ -29,12 +29,12 @@ class Smoke:
 
     def update(self):
 
-        self.vel_y *= 0.90
+        self.vel_y *= 0.95
         self.vel_x *= 0.95
 
         self.y -= self.vel_y
         self.x += self.vel_x
 
-        if self.vel_y < 0.1:
+        if self.vel_y < 1:
 
             self.program.smoke.pop(self.program.smoke.index(self))

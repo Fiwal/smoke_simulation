@@ -24,7 +24,7 @@ class SmokeSimulation:
         self.run = True
 
         self.clock = pygame.time.Clock()
-        self.FPS = 80
+        self.FPS = 120
 
     def add_smoke(self):
 
@@ -37,7 +37,7 @@ class SmokeSimulation:
             random_rotation = random.randint(-180, 180)
             random_alpha = random.randint(30, 40)
 
-            self.smoke.append(Smoke(random_size, random_size, self.smoke_x, 290, 0, random_y_speed, self,
+            self.smoke.append(Smoke(random_size, random_size, self.smoke_x, self.height - 10, 0, random_y_speed, self,
                                     random_rotation, random_alpha))
 
             self.smoke_x += random.randint(50, 80)
@@ -51,8 +51,7 @@ class SmokeSimulation:
 
             self.add_smoke()
             self.check_if_close_game()
-            self.update()
-            self.draw()
+            self.draw_and_update()
 
             self.clock.tick(self.FPS)
             pygame.display.flip()
@@ -63,20 +62,16 @@ class SmokeSimulation:
                 self.run = False
                 break
 
-    def draw(self):
+    def draw_and_update(self):
 
         self.window.fill((0, 0, 0))
 
         for i in self.smoke:
-            i.draw()
-
-    def update(self):
-
-        for i in self.smoke:
             i.update()
+            i.draw()
 
 
 if __name__ == '__main__':
 
-    simulation = SmokeSimulation(600, 300)
+    simulation = SmokeSimulation(600, 400)
     simulation.main()
