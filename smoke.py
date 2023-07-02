@@ -3,9 +3,10 @@ import pygame
 
 class Smoke:
 
-    def __init__(self, height, width, x, y, x_speed, y_speed, program, rotation, alpha):
+    def __init__(self, height, width, x, y, x_speed, y_speed, program, rotation, alpha, simulation):
 
         self.program = program
+        self.simulation = simulation
 
         self.width = width
         self.height = height
@@ -29,12 +30,12 @@ class Smoke:
 
     def update(self):
 
-        self.vel_y *= 0.93
+        self.vel_y *= 0.91
         self.vel_x *= 0.95
 
         self.y -= self.vel_y
         self.x += self.vel_x
 
-        if self.vel_y < 0.1:
+        if self.vel_y < 0.2:
 
-            self.program.smoke.pop(self.program.smoke.index(self))
+            self.simulation.smoke.pop(self.simulation.smoke.index(self))

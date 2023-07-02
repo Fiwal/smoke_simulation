@@ -1,60 +1,25 @@
-import random
 import pygame
-
-from smoke import Smoke
+from smoke_simulation import SmokeSimulation
 
 pygame.init()
 
 
-class SmokeSimulation:
+class Program:
 
     def __init__(self, width, height):
 
         self.height = height
         self.width = width
 
-        self.smoke_x = 1
-
         self.window = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("smoke_simulation")
-
-        self.smoke = []
-        self.add_smoke()
 
         self.run = True
 
         self.clock = pygame.time.Clock()
-        self.FPS = 80
+        self.FPS = 150
 
-    def add_smoke(self):
-
-        self.smoke_x = -50
-
-        while True:
-
-            random_size = random.randint(80, 130)
-            random_y_speed = random.uniform(5, 30)
-            random_rotation = random.randint(-180, 180)
-            random_alpha = random.randint(30, 40)
-
-            self.smoke.append(Smoke(random_size, random_size, self.smoke_x, 290, 0, random_y_speed, self,
-                                    random_rotation, random_alpha))
-
-            self.smoke_x += random.randint(50, 80)
-
-            if self.smoke_x > self.width:
-                break
-
-    def main(self):
-
-        while self.run:
-
-            self.add_smoke()
-            self.check_if_close_game()
-            self.update_and_draw()
-
-            self.clock.tick(self.FPS)
-            pygame.display.flip()
+        self.smoke_simulation = SmokeSimulation(self, -50, self.width, self.height - 10)
 
     def check_if_close_game(self):
         for event in pygame.event.get():
@@ -62,14 +27,17 @@ class SmokeSimulation:
                 self.run = False
                 break
 
-    def update_and_draw(self):
+    def main(self):
 
-        self.window.fill((0, 0, 0))
+        while self.run:
 
-        for i in self.smoke:
-            i.update()
-            i.draw()
+            self.check_if_close_game()
+
+            self.smoke_simulation.update_and_draw()
+
+            self.clock.tick(self.FPS)
+            pygame.display.flip()
 
 
-simulation = SmokeSimulation(600, 300)
-simulation.main()
+program = Program(600, 400)
+program.main()
